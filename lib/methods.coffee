@@ -7,15 +7,15 @@ Meteor.methods
       name: name
       owner: @userId
 
-  lookForGame: (dinosaur_id) ->
+  lookForArenaMatch: (dinosaur_id) ->
     now = +new Date()
     modifier =
       $push:
         players: @userId
       $set:
         updated: now
-    modifier.$set[@userId +'.timestamp'] = now
-    modifier.$set[@userId +'.dinosaur'] = dinosaur_id
+    modifier.$set[@userId+'.timestamp'] = now
+    modifier.$set[@userId+'.dinosaur'] = dinosaur_id
 
     success = DinoMatches.update
       players:
@@ -26,7 +26,7 @@ Meteor.methods
 
     if success
       query = {}
-      query[@userId + '.timestamp'] = now
+      query[@userId+'.timestamp'] = now
       DinoMatches.findOne query
     else
       doc =
@@ -37,3 +37,12 @@ Meteor.methods
         timestamp: now
         dinosaur: dinosaur_id
       DinoMatches.insert doc
+
+  winArenaMatch: (match_id) ->
+    DinoMatches.update
+      _id: match_id
+      players: this.userId
+    ,
+      $set:
+        expired: true
+        winner: this.userId

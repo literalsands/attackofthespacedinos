@@ -13,13 +13,6 @@ if Meteor.isClient
       profileRoute: 'zoo'
 
 Router.map ->
-  #@route 'home',
-  #path: '/'
-  #template: 'game'
-  #data: {}
-  #onBeforeAction: ->
-  #AccountsEntry.signInRequired @
-
   @route 'arena',
     path: '/arena/:match_id'
     template: 'game'
@@ -29,7 +22,7 @@ Router.map ->
       AccountsEntry.signInRequired @
       @subscribe 'match', @params.match_id
     data: ->
-      Matches.find _id: @params.match_id
+      DinoMatches.find _id: @params.match_id
 
   @route 'zoo',
     path: '/'
@@ -39,6 +32,7 @@ Router.map ->
     onBeforeAction: ->
       AccountsEntry.signInRequired @
       @subscribe 'userZoo'
+      @subscribe 'userMatches'
     data: ->
       Dinosaurs.find()
 

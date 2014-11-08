@@ -3,3 +3,6 @@ Meteor.publish 'match', (match_id) ->
 
 Meteor.publish 'userZoo', ->
   Dinosaurs.find owner: this.userId
+
+Meteor.publish 'userMatches', ->
+  DinoMatches.find players: this.userId
