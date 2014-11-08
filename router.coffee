@@ -1,8 +1,20 @@
 Router.configure
   autorender: false
 
-Router.onBeforeAction ->
-  AccountsEntry.signInRequired @
+if Meteor.isServer
+  Meteor.startup ->
+    AccountsEntry.config {}
+
+if Meteor.isClient
+  Meteor.startup ->
+    AccountsEntry.config
+      homeRoute: '/'
+      dashboardRoute: '/zoo'
+      profileRoute: 'zoo'
+
+Router.onBeforeAction -> AccountsEntry.signInRequired @
+,
+  only: ['home', 'zoo', 'arena']
 
 Router.map ->
   @route 'home',
@@ -20,5 +32,16 @@ Router.map ->
       @next()
     data: ->
       Matches.find _id: @params.match_id
+
+  @route 'zoo',
+    path: '/zoo'
+    template: 'game'
+    yieldTemplates:
+      zoo: to: 'main'
+    onBeforeAction: ->
+      @subscribe 'userZoo'
+      @next()
+    data: ->
+      Dinosaurs.find()
 
 

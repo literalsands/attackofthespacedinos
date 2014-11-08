@@ -4,7 +4,6 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
 insecure
 less
 coffeescript
@@ -18,4 +17,3 @@ iron:middleware-stack
 joshowens:accounts-entry
 accounts-google
 accounts-twitter
-
