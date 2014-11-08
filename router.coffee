@@ -9,38 +9,36 @@ if Meteor.isClient
   Meteor.startup ->
     AccountsEntry.config
       homeRoute: '/'
-      dashboardRoute: '/zoo'
+      dashboardRoute: '/'
       profileRoute: 'zoo'
 
-Router.onBeforeAction -> AccountsEntry.signInRequired @
-,
-  only: ['home', 'zoo', 'arena']
-
 Router.map ->
-  @route 'home',
-    path: '/'
-    template: 'game'
-    data: {}
+  #@route 'home',
+  #path: '/'
+  #template: 'game'
+  #data: {}
+  #onBeforeAction: ->
+  #AccountsEntry.signInRequired @
 
   @route 'arena',
     path: '/arena/:match_id'
     template: 'game'
     yieldTemplates:
-      arena: to: 'main'
+      arena: to: 'frame'
     onBeforeAction: ->
+      AccountsEntry.signInRequired @
       @subscribe 'match', @params.match_id
-      @next()
     data: ->
       Matches.find _id: @params.match_id
 
   @route 'zoo',
-    path: '/zoo'
+    path: '/'
     template: 'game'
     yieldTemplates:
-      zoo: to: 'main'
+      zoo: to: 'frame'
     onBeforeAction: ->
+      AccountsEntry.signInRequired @
       @subscribe 'userZoo'
-      @next()
     data: ->
       Dinosaurs.find()
 

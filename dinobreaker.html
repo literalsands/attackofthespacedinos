@@ -3,12 +3,14 @@
 </head>
 
 <template name="dinosaurs">
+  dinos
   {{#each this}}
     {{> dinosaur}}
   {{/each}}
 </template>
 
 <template name="dinosaur">
+  dino
   <div class="dinosaur">
     {{name}}
     {{stats}}
@@ -16,6 +18,7 @@
 </template>
 
 <template name="user">
+  user
   <div class="user">
     {{name}}
     {{dinosaurs}}
@@ -23,18 +26,23 @@
 </template>
 
 <template name="game">
+  game
   {{> user}}
-  {{> yield "main"}}
+  {{> yield "frame"}}
+  {{serverTime}}
 </template>
 
 <template name="zoo">
+  zoo
   {{> dinosaurs}}
 </template>
 
 <template name="matchmaking">
+  matchmaking
 </template>
 
 <template name="arena">
+  arena
   {{#with dinoBattleGame}}
     <div id="battle-arena">
       <div id="defender-dino">
@@ -62,8 +70,3 @@
     {{/with}}
   {{/with}}
 </template>
-
-<body>
-  {{> user}}
-  {{> dinoBattle}}
-</body>

@@ -6,6 +6,8 @@ Template.arena.helpers
 
   opponentDino: ->
 
-Template.dinoBattle.events
+Template.arena.events
   'click .dino-action': ->
 
+Template.game.helpers
+  serverTime: -> +new Date()

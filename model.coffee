@@ -14,10 +14,10 @@ class @Dinosaur
   defendTwo: ->
     "Dodge"
 
-@Matches = new Meteor.Collection "games",
-  transform: (doc) -> new Match doc
+@DinoMatches = new Meteor.Collection "dino_matches",
+  transform: (doc) -> new DinoMatch doc
 
-class @Match
+class @DinoMatch
   constructor: (doc) ->
     _.extend @, doc
   players: [null, null]
