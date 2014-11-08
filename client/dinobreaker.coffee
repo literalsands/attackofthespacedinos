@@ -1,9 +1,12 @@
 Session.setDefault "counter", 0
 
+Template.dinosaurs.helpers
+  userDinosaurs: ->
+    Dinosaurs.find
+      owner: undefined
+
 Template.dinosaur.helpers
-  name: -> #function (a) {
-    Dinosaurs.findOne()?.name
-  #}
+  stats: {}
 
 Template.dinosaur.events
   'click button': ->

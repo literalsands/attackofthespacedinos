@@ -2,6 +2,11 @@
   <title>dinobreaker</title>
 </head>
 
+<template name="dinosaurs">
+  {{#each userDinosaurs}}
+    {{> dinosaur}}
+  {{/each}}
+</template>
 
 <template name="dinosaur">
   <div class="dinosaur">
@@ -18,7 +23,6 @@
 </template>
 
 <template name="dinoBattle">
-  
 </template>
 
 <body>
