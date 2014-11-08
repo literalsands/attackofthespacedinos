@@ -72,7 +72,35 @@ Meteor.methods
     modifier.$set[@userId+'.action'] = choice
     modifier.$set[@userId+'.action-lock'] =
       Actions[choice].time * 1000 + now
-    DinoMatches.update selector, modifier
+    changes = DinoMatches.update selector, modifier
+
+    if changes > 0 and (choice is 0 or choice is 1)
+      firstRoll = Random.fraction()
+      match = DinoMatches.findOne match_id
+      modifier = $push: actions: {}
+      if firstRoll <= Actions[choice].success
+        opponent = (match.players.indexOf(@userId) + 1) % 2
+        console.log now, match[match.players[opponent]]['action-lock']
+        if now < match[match.players[opponent]]['action-lock']
+          opponentAction = Actions[match[match.players[opponent]].action]
+          secondRoll = Random.fraction()
+          if secondRoll <= opponentAction.success
+            console.log "Block"
+            modifier.$push.actions[match[match.players[opponent]].dinosaur] =
+              block: opponentAction.defense
+              counter: opponentAction.attack
+          else
+            console.log "Block Miss"
+            modifier.$push.actions[match[match.players[opponent]].dinosaur] =
+              miss: true
+        console.log "Attack"
+        modifier.$push.actions[match[@userId].dinosaur] =
+          attack: Actions[choice].attack
+          armor: Actions[choice].defense
+      else
+        console.log "Attack Miss"
+        modifier.$push.actions[match[@userId].dinosaur] = miss: true
+      DinoMatches.update match_id, modifier
 
     #match = DinoMatches.findOne match_id
     #actions = _.compact _.pluck match, 'action'

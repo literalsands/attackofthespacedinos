@@ -12,15 +12,13 @@ Template.arena.helpers
   userDino: ->
     Dinosaurs.findOne @[Meteor.userId()]?.dinosaur
   opponentDino: ->
-    opponent = (@players?.indexOf(Meteor.userId()) + 1) % 2
+    opponent = (@players.indexOf(Meteor.userId()) + 1) % 2
     Dinosaurs.findOne @[@players[opponent]]?.dinosaur
   HP_BAR: ->
-    if not @hp
-      "[XXXXX]"
-    else
-      "[#{ Array(@hp).join('X') }#{ Array(5-@hp).join(' ') }]"
+    hp = 6
+    "[#{ Array(hp).join('&#10084;') }#{ Array(6-hp).join(' ') }]"
   opponentStance: ->
-    opponent = (@players?.indexOf(Meteor.userId()) + 1) % 2
+    opponent = (@players.indexOf(Meteor.userId()) + 1) % 2
     console.log @
     switch @[@players[opponent]]?.action
       when 0

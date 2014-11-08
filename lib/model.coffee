@@ -43,21 +43,6 @@ class @DinoMatch
   constructor: (doc) ->
     _.extend @, doc
   players: [null, null]
-  resolveAction: ->
-    that = @
-    players = _.sortBy @players, (player) ->
-      that[player].time
-
-    ret =  {}
-    pda = @players.map (player) ->
-      [player, that[player].dinosaur, that[player].action]
-
-    @state
-
-    _.sorted pda
-
-    expired: true
-    winner: pda[0][0]
 
 
 

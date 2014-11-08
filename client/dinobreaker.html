@@ -47,14 +47,15 @@
     <div id="battle-arena">
       {{#with userDino}}
         <div id="defender-dino">
-          {{name}}
-          <div class="hp-bar">{{HP_BAR}}</div>
+          <img src="/Dinosaur.jpg">
+          <div class="name">{{name}}</div>
+          <div class="hp-bar">{{{HP_BAR}}}</div>
         </div>
       {{/with}}
       {{#with opponentDino}}
         <div id="aggressor-dino">
           {{name}}
-          <div class="hp-bar">{{HP_BAR}}</div>
+          <div class="hp-bar">{{{HP_BAR}}}</div>
         </div>
       {{/with}}
       <div>
