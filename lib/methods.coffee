@@ -8,41 +8,77 @@ Meteor.methods
       owner: @userId
 
   lookForArenaMatch: (dinosaur_id) ->
-    now = +new Date()
-    modifier =
-      $push:
-        players: @userId
-      $set:
-        updated: now
-    modifier.$set[@userId+'.timestamp'] = now
-    modifier.$set[@userId+'.dinosaur'] = dinosaur_id
+    alreadyLooking = DinoMatches.findOne $and: [
+      players: $size: 1
+    ,
+      players: @userId
+    ]
 
-    success = DinoMatches.update
-      players:
-        $size: 1
-      expired:
-        $ne: true
-    , modifier
+    if not _.isObject alreadyLooking
+      now = +new Date()
+      modifier =
+        $push:
+          players: @userId
+        $set:
+          updated: now
+      modifier.$set[@userId+'.timestamp'] = now
+      modifier.$set[@userId+'.dinosaur'] = dinosaur_id
 
-    if success
-      query = {}
-      query[@userId+'.timestamp'] = now
-      DinoMatches.findOne query
-    else
-      doc =
-        created: now
-        update: now
-        players: [@userId]
-      doc[@userId] =
-        timestamp: now
-        dinosaur: dinosaur_id
-      DinoMatches.insert doc
+      success = DinoMatches.update
+        $and: [
+          players:
+            $size: 1
+        ,
+          players:
+            $ne: @userId
+        ]
+        expired:
+          $ne: true
+      , modifier
+
+      if success
+        query = {}
+        query[@userId+'.timestamp'] = now
+        DinoMatches.findOne query
+      else
+        doc =
+          created: now
+          updated: now
+          players: [@userId]
+        doc[@userId] =
+          timestamp: now
+          dinosaur: dinosaur_id
+        DinoMatches.insert doc
 
   winArenaMatch: (match_id) ->
     DinoMatches.update
       _id: match_id
-      players: this.userId
+      players: @userId
     ,
       $set:
         expired: true
-        winner: this.userId
+        winner: @userId
+
+  performAction: (choice, match_id) ->
+    now = +new Date()
+    selector = _id: match_id
+    selector.$or = []
+    selector.$or[0] = {}
+    selector.$or[0][@userId+'.action-lock'] = $lt: now
+    selector.$or[1] = {}
+    selector.$or[1][@userId+'.action-lock'] = $exists: false
+
+    modifier = $set: {}
+    modifier.$set[@userId+'.action'] = choice
+    modifier.$set[@userId+'.action-lock'] =
+      Actions[choice].time * 1000 + now
+    DinoMatches.update selector, modifier
+
+    #match = DinoMatches.findOne match_id
+    #actions = _.compact _.pluck match, 'action'
+
+    #resolution = match.resolveAction()
+    #DinoMatches.update
+      #_id: match_id
+    #,
+      #$set: resolution

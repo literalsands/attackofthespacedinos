@@ -17,23 +17,27 @@ Router.map ->
     path: '/arena/:match_id'
     template: 'game'
     yieldTemplates:
-      arena: to: 'frame'
+      arena:
+        to: 'frame'
     onBeforeAction: ->
       AccountsEntry.signInRequired @
       @subscribe 'match', @params.match_id
+      @subscribe 'userMatches'
     data: ->
-      DinoMatches.find _id: @params.match_id
+      DinoMatches.findOne _id: @params.match_id
 
   @route 'zoo',
     path: '/'
     template: 'game'
     yieldTemplates:
-      zoo: to: 'frame'
+      zoo:
+        to: 'frame'
     onBeforeAction: ->
       AccountsEntry.signInRequired @
       @subscribe 'userZoo'
       @subscribe 'userMatches'
     data: ->
-      Dinosaurs.find()
+      Dinosaurs.find
+        owner: Meteor.userId()
 
 
