@@ -4,7 +4,11 @@
 class @Dinosaur
   constructor: (doc) ->
     _.extend @, doc
-  name: "Jeremy"
+  name: "Dinosaur"
+  attackOne: "Tail Swipe"
+  attackTwo: "Headbutt"
+  defendOne: "Defend"
+  defendTwo: "Dodge"
 
 @Games = new Meteor.Collection "games",
   transform: (doc) -> new Game doc
@@ -12,5 +16,6 @@ class @Dinosaur
 class @Game
   constructor: (doc) ->
     _.extend @, doc
-  name: "Jeremy"
+  playerOne: null
+  playerTwo: null
 

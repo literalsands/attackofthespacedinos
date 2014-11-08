@@ -1,14 +1,19 @@
 Session.setDefault "counter", 0
 
 Template.dinosaurs.helpers
-  userDinosaurs: ->
-    Dinosaurs.find
-      owner: undefined
+  dinosaurs: ->
+    Dinosaurs.find()
 
 Template.dinosaur.helpers
-  stats: {}
+  stats: ->
 
-Template.dinosaur.events
-  'click button': ->
+Template.dinoBattle.helpers
+  dinoBattleGame: ->
+    Games.findOne()
+  dinoDefender: ->
+    Dinosaurs.findOne()
+
+Template.dinoBattle.events
+  'click .dino-action': ->
     Session.set "counter", Session.get("counter") + 1
 

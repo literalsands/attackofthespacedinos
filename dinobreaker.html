@@ -3,7 +3,7 @@
 </head>
 
 <template name="dinosaurs">
-  {{#each userDinosaurs}}
+  {{#each dinosaurs}}
     {{> dinosaur}}
   {{/each}}
 </template>
@@ -23,9 +23,35 @@
 </template>
 
 <template name="dinoBattle">
+  {{#with dinoBattleGame}}
+    <div id="battle-arena">
+      <div id="defender-dino">
+      </div>
+      <div id="aggressor-dino">
+      </div>
+    </div>
+    {{#with dinoDefender}}
+      <div id="options">
+        <div class="four-box">
+          <div class="dino-action attack primary">
+            {{attackOne}}
+          </div>
+          <div class="dino-action attack secondary">
+            {{attackTwo}}
+          </div>
+          <div class="dino-action defense primary">
+            {{defendOne}}
+          </div>
+          <div class="dino-action defense secondary">
+            {{defendTwo}}
+          </div>
+        </div>
+      </div>
+    {{/with}}
+  {{/with}}
 </template>
 
 <body>
-  {{> dinosaur}}
   {{> user}}
+  {{> dinoBattle}}
 </body>
