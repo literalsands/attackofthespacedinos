@@ -7,13 +7,11 @@ Template.dinosaurs.helpers
 Template.dinosaur.helpers
   stats: ->
 
-Template.dinoBattle.helpers
-  dinoBattleGame: ->
-    Games.findOne()
-  dinoDefender: ->
-    Dinosaurs.findOne()
+Template.arena.helpers
+  userDino: ->
+
+  opponentDino: ->
 
 Template.dinoBattle.events
   'click .dino-action': ->
-    Session.set "counter", Session.get("counter") + 1
 

@@ -8,4 +8,14 @@ autopublish
 insecure
 less
 coffeescript
+iron:core
+iron:controller
+iron:router
+iron:location
+iron:url
+iron:layout
+iron:middleware-stack
+joshowens:accounts-entry
+accounts-google
+accounts-twitter
 

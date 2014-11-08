@@ -22,7 +22,19 @@
   </div>
 </template>
 
-<template name="dinoBattle">
+<template name="game">
+  {{> user}}
+  {{> yield "main"}}
+</template>
+
+<template name="zoo">
+  {{> dinosaurs}}
+</template>
+
+<template name="matchmaking">
+</template>
+
+<template name="arena">
   {{#with dinoBattleGame}}
     <div id="battle-arena">
       <div id="defender-dino">

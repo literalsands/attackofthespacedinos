@@ -5,17 +5,20 @@ class @Dinosaur
   constructor: (doc) ->
     _.extend @, doc
   name: "Dinosaur"
-  attackOne: "Tail Swipe"
-  attackTwo: "Headbutt"
-  defendOne: "Defend"
-  defendTwo: "Dodge"
+  attackOne: ->
+    "Tail Swipe"
+  attackTwo: ->
+    "Headbutt"
+  defendOne: ->
+    "Defend"
+  defendTwo: ->
+    "Dodge"
 
-@Games = new Meteor.Collection "games",
-  transform: (doc) -> new Game doc
+@Matches = new Meteor.Collection "games",
+  transform: (doc) -> new Match doc
 
-class @Game
+class @Match
   constructor: (doc) ->
     _.extend @, doc
-  playerOne: null
-  playerTwo: null
+  players: [null, null]
 
