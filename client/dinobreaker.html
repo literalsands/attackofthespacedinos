@@ -11,8 +11,8 @@
 <template name="dinosaur">
   <div class="dinosaur">
     <h2>
-    {{name}}
-  </h2>
+      {{name}}
+    </h2>
     <div>
       Basic Stats{{stats}}
     </div>
@@ -49,16 +49,16 @@
         <div id="defender-dino">
           <img src="/Dinosaur.jpg">
           <div class="name">{{name}}</div>
-          <div class="hp-bar">{{{HP_BAR}}}</div>
+          <div class="hp-bar">{{{hpBar}}}</div>
         </div>
       {{/with}}
       {{#with opponentDino}}
         <div id="aggressor-dino">
           {{name}}
-          <div class="hp-bar">{{{HP_BAR}}}</div>
+          <div class="hp-bar">{{{hpBar}}}</div>
         </div>
       {{/with}}
-      <div>
+      <div class="opponent message">
         Your opponent has taken {{opponentStance}} position.
       </div>
     </div>

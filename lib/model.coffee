@@ -28,7 +28,7 @@ class @Dinosaur
   success: 8/10
   time: 1.75
 ,
-  defense: 1.25
+  defense: 1.5
   attack: 0
   success: 8/10
   time: 1
